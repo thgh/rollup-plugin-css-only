@@ -5,28 +5,28 @@
 <a href="LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="Software License" />
 </a>
-<a href="https://github.com/thgh/rollup-plugin-css/issues">
-  <img src="https://img.shields.io/github/issues/thgh/rollup-plugin-css.svg" alt="Issues" />
+<a href="https://github.com/thgh/rollup-plugin-css-only/issues">
+  <img src="https://img.shields.io/github/issues/thgh/rollup-plugin-css-only.svg" alt="Issues" />
 </a>
 <a href="http://standardjs.com/">
   <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="JavaScript Style Guide" />
 </a>
-<a href="https://npmjs.org/package/rollup-plugin-css">
-  <img src="https://img.shields.io/npm/v/rollup-plugin-css.svg?style=flat-squar" alt="NPM" />
+<a href="https://npmjs.org/package/rollup-plugin-css-only">
+  <img src="https://img.shields.io/npm/v/rollup-plugin-css-only.svg?style=flat-squar" alt="NPM" />
 </a>
-<a href="https://github.com/thgh/rollup-plugin-css/releases">
-  <img src="https://img.shields.io/github/release/thgh/rollup-plugin-css.svg" alt="Latest Version" />
+<a href="https://github.com/thgh/rollup-plugin-css-only/releases">
+  <img src="https://img.shields.io/github/release/thgh/rollup-plugin-css-only.svg" alt="Latest Version" />
 </a>
   
 ## Installation
 ```
-npm install --save-dev rollup-plugin-css
+npm install --save-dev rollup-plugin-css-only
 ```
 
 ## Usage
 ```js
 // rollup.config.js
-import css from 'rollup-plugin-css'
+import css from 'rollup-plugin-css-only'
 
 export default {
   entry: 'entry.js',
