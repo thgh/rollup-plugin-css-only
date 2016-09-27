@@ -5,6 +5,7 @@ export default function css (options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
   let dest = options.output
+  let changes = 0
 
   return {
     name: 'css',
@@ -21,16 +22,21 @@ export default function css (options = {}) {
         }
       }
 
-      // Map of every stylesheet
-      styles[id] = code
+      // Keep track of every stylesheet
+      // Check if it changed since last render
+      if (styles[id] !== code && (styles[id] || code)) {
+        styles[id] = code
+        changes++
+      }
 
       return ''
     },
     ongenerate (opts, rendered) {
       // No stylesheet needed
-      if (options.output === false) {
+      if (!changes || options.output === false) {
         return
       }
+      changes = 0
 
       // Combine all stylesheets
       let css = ''
