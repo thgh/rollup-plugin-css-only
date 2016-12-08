@@ -69,21 +69,17 @@ export default function css (options = {}) {
         if (err) {
           throw err
         }
-        emitted(dest, css.length)
+        console.log(green(dest), getSize(css.length))
       })
     }
   }
 }
 
-export function emitted (text, bytes) {
-  console.log(green(text), getSize(bytes))
-}
-
-export function green (text) {
+function green (text) {
   return '\u001b[1m\u001b[32m' + text + '\u001b[39m\u001b[22m'
 }
 
-export function getSize (bytes) {
+function getSize (bytes) {
   return bytes < 10000
     ? bytes.toFixed(0) + ' B'
     : bytes < 1024000
