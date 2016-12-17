@@ -65,11 +65,14 @@ export default function css (options = {}) {
       }
 
       // Emit styles to file
-      writeFile(dest, css, (err) => {
-        if (err) {
-          throw err
-        }
-        console.log(green(dest), getSize(css.length))
+      return new Promise(function (resolve, reject) {
+        writeFile(dest, css, (err) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
       })
     }
   }
