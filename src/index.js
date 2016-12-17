@@ -31,7 +31,7 @@ export default function css (options = {}) {
 
       return ''
     },
-    ongenerate (opts, rendered) {
+    ongenerate (opts) {
       // No stylesheet needed
       if (!changes || options.output === false) {
         return
@@ -73,16 +73,4 @@ export default function css (options = {}) {
       })
     }
   }
-}
-
-function green (text) {
-  return '\u001b[1m\u001b[32m' + text + '\u001b[39m\u001b[22m'
-}
-
-function getSize (bytes) {
-  return bytes < 10000
-    ? bytes.toFixed(0) + ' B'
-    : bytes < 1024000
-    ? (bytes / 1024).toPrecision(3) + ' kB'
-    : (bytes / 1024 / 1024).toPrecision(4) + ' MB'
 }
