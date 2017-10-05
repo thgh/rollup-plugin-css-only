@@ -31,6 +31,7 @@
     "dist"
   ],
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "rollup-pluginutils": "^1.5.2"
   },
   "devDependencies": {
