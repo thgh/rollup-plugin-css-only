@@ -59,7 +59,7 @@ export default function css (options = {}) {
         }
 
         // Guess destination filename
-        dest = opts.dest || 'bundle.js'
+        dest = opts.file || 'bundle.js'
         if (dest.endsWith('.js')) {
           dest = dest.slice(0, -3)
         }
