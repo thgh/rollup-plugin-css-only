@@ -53,7 +53,7 @@ There is 1 option: `output`.
 By default the plugin will base the filename for the css on the bundle destination.
 
 ```js
-vue({
+css({
   // Filename to write all styles to
   output: 'bundle.scss',
 
