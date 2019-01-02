@@ -33,7 +33,7 @@ export default function css (options = {}) {
 
       return ''
     },
-    ongenerate (opts) {
+    generateBundle (opts) {
       // No stylesheet needed
       if (!changes || options.output === false) {
         return
