@@ -1,14 +1,14 @@
 import buble from 'rollup-plugin-buble'
 
 export default {
-  entry: 'src/index.js',
+  input: 'src/index.js',
   dest: 'dist/index.cjs.js',
   plugins: [
     buble()
   ],
   // Cleaner console
   onwarn (msg) {
-    if (msg && msg.startsWith('Treating')) {
+    if (msg && msg.message.startsWith('Treating')) {
       return
     }
   }
