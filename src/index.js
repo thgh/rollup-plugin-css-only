@@ -3,7 +3,7 @@ import { createFilter } from 'rollup-pluginutils'
 import path from 'path'
 import mkdirp from 'mkdirp'
 
-export default function css (options = {}) {
+export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
   let dest = options.output
@@ -11,7 +11,7 @@ export default function css (options = {}) {
 
   return {
     name: 'css',
-    transform (code, id) {
+    transform(code, id) {
       if (!filter(id)) {
         return
       }
@@ -33,7 +33,7 @@ export default function css (options = {}) {
 
       return ''
     },
-    generateBundle (opts) {
+    generateBundle(opts) {
       // No stylesheet needed
       if (!changes || options.output === false) {
         return
@@ -59,7 +59,13 @@ export default function css (options = {}) {
         }
 
         // Guess destination filename
-        dest = opts.file || (Array.isArray(opts.output) ? opts.output[0].file : opts.output && opts.output.file) || opts.dest || 'bundle.js'
+        dest =
+          opts.file ||
+          (Array.isArray(opts.output)
+            ? opts.output[0].file
+            : opts.output && opts.output.file) ||
+          opts.dest ||
+          'bundle.js'
         if (dest.endsWith('.js')) {
           dest = dest.slice(0, -3)
         }
@@ -67,14 +73,14 @@ export default function css (options = {}) {
       }
 
       // Emit styles to file
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         let { dir } = path.parse(dest)
 
-        mkdirp(dir, (err) => {
+        mkdirp(dir, err => {
           if (err) {
             reject(err)
           } else {
-            writeFile(dest, css, (err) => {
+            writeFile(dest, css, err => {
               if (err) {
                 reject(err)
               } else {
