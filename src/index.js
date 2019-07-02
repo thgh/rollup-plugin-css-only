@@ -33,7 +33,7 @@ export default function css(options = {}) {
 
       return ''
     },
-    generateBundle(opts) {
+    generateBundle(opts, bundle) {
       // No stylesheet needed
       if (!changes || options.output === false) {
         return
@@ -48,7 +48,7 @@ export default function css(options = {}) {
 
       // Emit styles through callback
       if (typeof options.output === 'function') {
-        options.output(css, styles)
+        options.output(css, styles, bundle)
         return
       }
 
