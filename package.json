@@ -28,6 +28,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=10.12.0"
+  },
   "peerDependencies": {
     "rollup": "^1.0.0"
   },

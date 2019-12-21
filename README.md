@@ -1,7 +1,5 @@
 # Rollup plugin that bundles imported css
 
-### Integrates nicely with rollup-plugin-vue2
-
 <a href="LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="Software License" />
 </a>
@@ -21,6 +19,9 @@
 ## Installation
 ```
 npm install --save-dev rollup-plugin-css-only
+
+# If using Node.js lower than 10.12
+npm install --save-dev rollup-plugin-css-only@1
 ```
 
 ## Usage
@@ -55,13 +56,13 @@ By default the plugin will base the filename for the css on the bundle destinati
 ```js
 css({
   // Filename to write all styles to
-  output: 'bundle.scss',
+  output: 'bundle.css',
 
   // Callback that will be called ongenerate with two arguments:
   // - styles: the contents of all style tags combined: 'body { color: green }'
   // - styleNodes: an array of style objects: [{lang: 'css', content: 'body { color: green }'}]
   output: function (styles, styleNodes) {
-    writeFileSync('bundle.scss', styles)
+    writeFileSync('bundle.css', styles)
   },
 
   // Disable any style output or callbacks
