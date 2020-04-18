@@ -1,4 +1,4 @@
-import buble from 'rollup-plugin-buble'
+import buble from '@rollup/plugin-buble'
 
 export default {
   input: 'src/index.js',
@@ -12,6 +12,6 @@ export default {
       format: 'es'
     }
   ],
-  external: ['fs', 'path', 'rollup-pluginutils'],
+  external: ['fs', 'path', '@rollup/pluginutils'],
   plugins: [buble()]
 }

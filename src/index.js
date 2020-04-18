@@ -1,5 +1,5 @@
 import { promises, writeFile } from 'fs'
-import { createFilter } from 'rollup-pluginutils'
+import { createFilter } from '@rollup/pluginutils'
 import path from 'path'
 
 export default function css(options = {}) {
