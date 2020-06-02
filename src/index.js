@@ -1,6 +1,5 @@
-import { promises, writeFile } from 'fs'
 import { createFilter } from 'rollup-pluginutils'
-import path from 'path'
+import { outputFile } from 'fs-extra'
 
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
@@ -73,21 +72,12 @@ export default function css(options = {}) {
 
       // Emit styles to file
       return new Promise((resolve, reject) => {
-        let { dir } = path.parse(dest)
-
-        promises
-          .mkdir(dir, { recursive: true })
-          .then(() => {
-            writeFile(dest, css, err => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve()
-              }
-            })
-          })
-          .catch(err => {
-            reject(err)
+          outputFile(dest, css, err => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve()
+            }
           })
       })
     }

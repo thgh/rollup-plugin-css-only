@@ -35,7 +35,8 @@
     "rollup": "^1.0.0"
   },
   "dependencies": {
-    "rollup-pluginutils": "^2.3.3"
+    "rollup-pluginutils": "^2.3.3",
+    "fs-extra": "^9.0.0"
   },
   "devDependencies": {
     "rollup": "^1.0.0",
