@@ -1,5 +1,5 @@
 import { createFilter } from '@rollup/pluginutils'
-import { outputFile } from 'fs-extra'
+import { outputFile } from 'fs-extra/lib/output'
 
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)

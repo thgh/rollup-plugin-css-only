@@ -12,6 +12,6 @@ export default {
       format: 'es'
     }
   ],
-  external: ['fs', 'path', '@rollup/pluginutils'],
+  external: ['@rollup/pluginutils', 'fs-extra/lib/output'],
   plugins: [buble()]
 }

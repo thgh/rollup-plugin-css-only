@@ -35,11 +35,11 @@
     "rollup": "1 || 2"
   },
   "dependencies": {
-    "@rollup/pluginutils": "^3.0.0"
+    "@rollup/pluginutils": "^3.0.0",
+    "fs-extra": "^9.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-buble": "^0.21.3",
-    "rollup": "2",
-    "fs-extra": "^9.0.0"
+    "rollup": "2"
   }
 }
