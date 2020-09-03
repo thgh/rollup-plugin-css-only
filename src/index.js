@@ -4,6 +4,7 @@ import { outputFile } from 'fs-extra/lib/output'
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
+  const order = []
   let dest = options.output
   let changes = 0
 
@@ -22,6 +23,11 @@ export default function css(options = {}) {
         }
       }
 
+      // Track the order that each stylesheet is imported.
+      if (!order.includes(id)) {
+        order.push(id)
+      }
+
       // Keep track of every stylesheet
       // Check if it changed since last render
       if (styles[id] !== code && (styles[id] || code)) {
@@ -38,9 +44,10 @@ export default function css(options = {}) {
       }
       changes = 0
 
-      // Combine all stylesheets
+      // Combine all stylesheets, respecting import order
       let css = ''
-      for (const id in styles) {
+      for (let x = 0; x < order.length; x++) {
+        const id = order[x]
         css += styles[id] || ''
       }
 
