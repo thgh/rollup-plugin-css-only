@@ -1,5 +1,4 @@
 import { createFilter } from '@rollup/pluginutils'
-import { outputFile } from 'fs-extra/lib/output'
 
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
@@ -78,15 +77,7 @@ export default function css(options = {}) {
       }
 
       // Emit styles to file
-      return new Promise((resolve, reject) => {
-        outputFile(dest, css, err => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve()
-          }
-        })
-      })
+      this.emitFile({ type:'asset', name: dest, source: css })
     }
   }
 }
