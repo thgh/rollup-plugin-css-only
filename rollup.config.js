@@ -5,7 +5,8 @@ export default {
   output: [
     {
       file: 'dist/index.cjs.js',
-      format: 'cjs'
+      format: 'cjs',
+      exports: 'default'
     },
     {
       file: 'dist/index.es.js',
