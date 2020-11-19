@@ -77,7 +77,7 @@ export default function css(options = {}) {
       }
 
       // Emit styles to file
-      this.emitFile({ type:'asset', name: dest, source: css })
+      this.emitFile({ type: 'asset', fileName: dest, source: css })
     }
   }
 }
