@@ -4,6 +4,20 @@ All notable changes to `rollup-plugin-css-only` will be documented in this file.
 
 ## [Unreleased]
 
+## [3.0.0] - 2020-11-19
+### Changed
+- Maintain import order of stylesheets when combining #21 @staydecent
+- Use emitFile instead of outputFile #24 @benmccann
+- Upgrade dependencies @thgh
+
+## [2.1.0] - 2020-06-02
+### Added
+- Mark as compatible with rollup 2 #14 @yagebu
+
+### Changed
+- Fix file writing errors #19 @aminya 
+- Upgrade dependencies #14 @yagebu
+
 ## [2.0.0] - 2019-12-21
 ### Added
 - Add `bundle` as 3rd argument in `output` function @lazyhero
