@@ -4,6 +4,10 @@ All notable changes to `rollup-plugin-css-only` will be documented in this file.
 
 ## [Unreleased]
 
+## [3.1.0] - 2020-12-18
+### Changed
+- Require @rollup/pluginutils@4
+
 ## [3.0.0] - 2020-11-19
 ### Changed
 - Maintain import order of stylesheets when combining #21 @staydecent
