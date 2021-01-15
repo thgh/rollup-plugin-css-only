@@ -53,7 +53,7 @@ export default function css(options = {}) {
 
       // Keep track of every stylesheet
       // Check if it changed since last render
-      // If we are in transform block, we can assume styles[id] !== code, right?
+      // NOTE: If we are in transform block, we can assume styles[id] !== code, right?
       if (styles[id] !== code && (styles[id] || code)) {
         styles[id] = code
         hasChanged = true
