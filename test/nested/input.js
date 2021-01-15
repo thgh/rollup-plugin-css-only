@@ -1,5 +1,5 @@
-import './js/a.js';
-import './css/a.css';
-import './css/b.css';
+import './js/b.js';
+import './css/r.css';
+import './css/g.css';
 
 console.log('This should happen second');
