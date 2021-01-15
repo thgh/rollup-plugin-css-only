@@ -33,6 +33,9 @@ export default function css(options = {}) {
 
   return {
     name: 'css',
+    buildStart() {
+      hasChanged = false
+    },
     transform(code, id) {
       if (!filter(id)) {
         return
@@ -69,7 +72,6 @@ export default function css(options = {}) {
       // If the files are imported in the same order and there are no changes
       // or options.output is false, there is no work to be done
       if (arraysEqual(prevIds, ids) && !hasChanged || options.output === false) return
-      hasChanged = false
       prevIds = ids
 
       let css = ''
