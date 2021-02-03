@@ -12,7 +12,7 @@ var arraysEqual = function(a, b) {
 
 function splitImports(code) {
   const imports = [];
-  const codeWithoutImports = code.replace(/@import\s+(.*)\r?\n/gm, (_, group) => {
+  const codeWithoutImports = code.replace(/@import\s+(.*);(\r\n)+/gm, (_, group) => {
     imports.push(group.replace(/(["'])~/, '$1'));
     return '';
   });
@@ -22,28 +22,47 @@ function splitImports(code) {
   };
 }
 
+// Get all CSS modules in the order that they were imported
+function getCSSModules(id, getModuleInfo) {
+  const modules = [];
+  const visited = new Set();
+
+  // traversal logic
+  // 1. mark node as visited
+  // 2. add to list at the end
+  // 3. go down with imports but in reverse order
+  // 4. reverse full list
+  // example
+  // root
+  //  1
+  //   11
+  //   12
+  //  2
+  //   21
+  //   22
+  // will result in the list: root, 2, 22, 21, 1, 12, 11 
+  // revered: 11, 12, 1, 21, 22, 2, root
+  const visitModule = (id) => {
+    if (visited.has(id)) {
+      return;
+    }
+    visited.add(id);
+    if (filter(id)) {
+      modules.push(id);
+    }
+    const reverseChildren = getModuleInfo(id).importedIds.slice().reverse();
+    reverseChildren.forEach(visitModule);
+  }
+  visitModule(id);
+  return modules.reverse();
+};
+
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
   let dest = options.output
   let hasChanged = false
   let prevIds = []
-
-  // Get all CSS modules in the order that they were imported
-  const getCSSModules = (id, getModuleInfo, modules = new Set()) => {
-    if (modules.has(id)) {
-      return new Set()
-    }
-    
-    if (filter(id)) modules.add(id)
-    
-    // Recursively retrieve all of imported CSS modules
-    getModuleInfo(id).importedIds.forEach(importId => {
-      modules = new Set([].concat(Array.from(modules), Array.from(getCSSModules(importId, getModuleInfo, modules))))
-    });
-  
-    return modules
-  };
 
   return {
     name: 'css',
@@ -92,7 +111,7 @@ export default function css(options = {}) {
       for (const file in bundle) {
         const root = bundle[file].facadeModuleId
         const modules = getCSSModules(root, this.getModuleInfo)
-        ids.push(...Array.from(modules))
+        ids.push(...modules)
       }
 
       // If the files are imported in the same order and there are no changes

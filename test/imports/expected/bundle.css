@@ -1,4 +1,12 @@
-.rollup {
-  color: green;
-  user-select: none;
+.first {
+  color: blue;
 }
+
+.second {
+  color: green;
+}
+
+.last {
+  color: green;
+}
+
