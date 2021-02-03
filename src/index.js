@@ -10,6 +10,18 @@ var arraysEqual = function(a, b) {
   return true
 }
 
+function splitImports(code) {
+  const imports = [];
+  const codeWithoutImports = code.replace(/@import\s+(.*)\r?\n/gm, (_, group) => {
+    imports.push(group.replace(/(["'])~/, '$1'));
+    return '';
+  });
+  return {
+    imports,
+    codeWithoutImports
+  };
+}
+
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
@@ -43,10 +55,21 @@ export default function css(options = {}) {
         return
       }
 
+      const { imports, codeWithoutImports } = splitImports(code);
+
       // When output is disabled, the stylesheet is exported as a string
       if (options.output === false) {
+        if (imports.length === 0) {
+          return {
+            code: `export default ['${JSON.stringify(code)}'`,
+            map: { mappings: '' }
+          }
+        }
+        const importNamed = imports.map((d, i) => `import i${i} from ${d}`).join('\n');
         return {
-          code: 'export default ' + JSON.stringify(code),
+          code: `
+            ${importNamed}
+            export default ${imports.map((_, i) => `i${i}`).join(' + ')} + '${JSON.stringify(codeWithoutImports)}'`,
           map: { mappings: '' }
         }
       }
@@ -54,12 +77,13 @@ export default function css(options = {}) {
       // Keep track of every stylesheet
       // Check if it changed since last render
       // NOTE: If we are in transform block, we can assume styles[id] !== code, right?
-      if (styles[id] !== code && (styles[id] || code)) {
-        styles[id] = code
+      if (styles[id] !== codeWithoutImports && (styles[id] || codeWithoutImports)) {
+        styles[id] = codeWithoutImports
         hasChanged = true
       }
 
-      return ''
+      // return a list of imports
+      return imports.map((d) => `import ${d}`).join('\n');
     },
     generateBundle(opts, bundle) {
       const ids = []

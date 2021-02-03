@@ -10,7 +10,8 @@
     "dev": "rollup -cw",
     "test:nested": "cd test/nested && rm -rf output && rollup -c && cmp output/bundle.js expected/bundle.js && cmp output/bundle.css expected/bundle.css && cd ../..",
     "test:simple": "cd test/simple && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
-    "test": "npm run test:simple && npm run test:nested",
+    "test:imports": "cd test/imports && rm -rf output && rollup -c && cmp output/bundle.js expected/bundle.js && cmp output/bundle.css expected/bundle.css && cd ../..",
+    "test": "npm run test:simple && npm run test:nested && npm run test:imports",
     "lint": "prettier rollup.config.js src/**",
     "prepare": "npm run build",
     "prepublish": "npm run build"
