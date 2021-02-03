@@ -23,7 +23,7 @@ function splitImports(code) {
 }
 
 // Get all CSS modules in the order that they were imported
-function getCSSModules(id, getModuleInfo) {
+function getCSSModules(id, filter, getModuleInfo) {
   const modules = [];
   const visited = new Set();
 
@@ -110,7 +110,7 @@ export default function css(options = {}) {
       // Determine import order of files
       for (const file in bundle) {
         const root = bundle[file].facadeModuleId
-        const modules = getCSSModules(root, this.getModuleInfo)
+        const modules = getCSSModules(root, filter, this.getModuleInfo)
         ids.push(...modules)
       }
 
