@@ -1,62 +1,5 @@
 import { createFilter } from '@rollup/pluginutils'
 
-var arraysEqual = function(a, b) {
-  if (a.length !== b.length) return false
-
-  for (let i = a.length; i--;) {
-    if (a[i] !== b[i]) return false
-  }
-
-  return true
-}
-
-function splitImports(code) {
-  const imports = [];
-  const codeWithoutImports = code.replace(/@import\s+(.*);(\r\n)+/gm, (_, group) => {
-    imports.push(group.replace(/(["'])~/, '$1'));
-    return '';
-  });
-  return {
-    imports,
-    codeWithoutImports
-  };
-}
-
-// Get all CSS modules in the order that they were imported
-function getCSSModules(id, filter, getModuleInfo) {
-  const modules = [];
-  const visited = new Set();
-
-  // traversal logic
-  // 1. mark node as visited
-  // 2. add to list at the end
-  // 3. go down with imports but in reverse order
-  // 4. reverse full list
-  // example
-  // root
-  //  1
-  //   11
-  //   12
-  //  2
-  //   21
-  //   22
-  // will result in the list: root, 2, 22, 21, 1, 12, 11 
-  // revered: 11, 12, 1, 21, 22, 2, root
-  const visitModule = (id) => {
-    if (visited.has(id)) {
-      return;
-    }
-    visited.add(id);
-    if (filter(id)) {
-      modules.push(id);
-    }
-    const reverseChildren = getModuleInfo(id).importedIds.slice().reverse();
-    reverseChildren.forEach(visitModule);
-  }
-  visitModule(id);
-  return modules.reverse();
-};
-
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
@@ -158,3 +101,55 @@ export default function css(options = {}) {
     }
   }
 }
+
+function arraysEqual(a, b) {
+  if (a.length !== b.length) return false
+  return a.every((ai, i) => ai === b[i]);
+}
+
+function splitImports(code) {
+  const imports = [];
+  const codeWithoutImports = code.replace(/@import\s+(.*);(\r\n)+/gm, (_, group) => {
+    imports.push(group.replace(/(["'])~/, '$1'));
+    return '';
+  });
+  return {
+    imports,
+    codeWithoutImports
+  };
+}
+
+// Get all CSS modules in the order that they were imported
+function getCSSModules(id, filter, getModuleInfo) {
+  const modules = [];
+  const visited = new Set();
+
+  // traversal logic
+  // 1. mark node as visited
+  // 2. add to list at the end
+  // 3. go down with imports but in reverse order
+  // 4. reverse full list
+  // example
+  // root
+  //  1
+  //   11
+  //   12
+  //  2
+  //   21
+  //   22
+  // will result in the list: root, 2, 22, 21, 1, 12, 11 
+  // revered: 11, 12, 1, 21, 22, 2, root
+  const visitModule = (id) => {
+    if (visited.has(id)) {
+      return;
+    }
+    visited.add(id);
+    if (filter(id)) {
+      modules.push(id);
+    }
+    const reverseChildren = getModuleInfo(id).importedIds.slice().reverse();
+    reverseChildren.forEach(visitModule);
+  }
+  visitModule(id);
+  return modules.reverse();
+};
