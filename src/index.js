@@ -23,7 +23,7 @@ export default function css(options = {}) {
       if (options.output === false) {
         if (imports.length === 0) {
           return {
-            code: `export default ['${JSON.stringify(code)}'`,
+            code: `export default ${JSON.stringify(code)}`,
             map: { mappings: '' }
           }
         }
