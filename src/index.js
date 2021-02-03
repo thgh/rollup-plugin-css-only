@@ -109,7 +109,7 @@ function arraysEqual(a, b) {
 
 function splitImports(code) {
   const imports = [];
-  const codeWithoutImports = code.replace(/@import\s+(.*);(\r\n)+/gm, (_, group) => {
+  const codeWithoutImports = code.replace(/@import\s+(.*);[\r\n]*/gm, (_, group) => {
     imports.push(group.replace(/(["'])~/, '$1'));
     return '';
   });
