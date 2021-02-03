@@ -31,7 +31,7 @@ export default function css(options = {}) {
         return {
           code: `
             ${importNamed}
-            export default ${imports.map((_, i) => `i${i}`).join(' + ')} + '${JSON.stringify(codeWithoutImports)}'`,
+            export default ${imports.map((_, i) => `i${i}`).join(' + ')} + ${JSON.stringify(codeWithoutImports)}`,
           map: { mappings: '' }
         }
       }
