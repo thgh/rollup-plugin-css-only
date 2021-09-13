@@ -6,6 +6,7 @@ export default function css(options = {}) {
   const order = []
   let dest = options.output
   let changes = 0
+  let lastEmit = null;
 
   return {
     name: 'css',
@@ -39,6 +40,9 @@ export default function css(options = {}) {
     generateBundle(opts, bundle) {
       // No stylesheet needed
       if (!changes || options.output === false) {
+        if (options.emitOnEveryBuild === true) {
+          this.emitFile(lastEmit) 
+        }
         return
       }
       changes = 0
@@ -77,7 +81,8 @@ export default function css(options = {}) {
       }
 
       // Emit styles to file
-      this.emitFile({ type: 'asset', fileName: dest, source: css })
+      lastEmit = { type: 'asset', fileName: dest, source: css }
+      this.emitFile(lastEmit)
     }
   }
 }
