@@ -15,7 +15,7 @@
 <a href="https://github.com/thgh/rollup-plugin-css-only/releases">
   <img src="https://img.shields.io/github/release/thgh/rollup-plugin-css-only.svg" alt="Latest Version" />
 </a>
-  
+
 ## Installation
 ```
 npm install --save-dev rollup-plugin-css-only
@@ -52,6 +52,7 @@ The idea is to keep the options similar to [rollup-plugin-sass](https://github.c
 
 There is 1 option: `output`.
 By default the plugin will base the filename for the css on the bundle destination.
+The css output is only updated if a change is detected.
 
 ```js
 css({
