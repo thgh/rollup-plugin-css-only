@@ -22,6 +22,9 @@ npm install --save-dev rollup-plugin-css-only
 
 # If using Node.js lower than 10.12
 npm install --save-dev rollup-plugin-css-only@1
+
+# install type definitions
+npm install --save-dev @types/rollup-plugin-css-only
 ```
 
 ## Usage
