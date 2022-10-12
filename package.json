@@ -1,18 +1,24 @@
 {
   "name": "rollup-plugin-css-only",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Rollup plugin that bundles imported css",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
+  "type": "module",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -cw",
     "test:simple": "cd test/simple && rm -f output.* && rollup -c && cmp output.js ../expected.js && cmp output.css expected.css && cd ../..",
+    "test:win:simple": "cd .\\test\\simple && del -f output.* && rollup -c && cd .. && ECHO n|comp simple\\output.js expected.js && ECHO n|comp simple\\output.css simple\\expected.css && cd ..",
     "test": "npm run test:simple",
+    "test:win": "npm run test:win:simple",
     "lint": "prettier rollup.config.js src/**",
     "prepare": "npm run build",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "check-updates": "npx npm-check-updates",
+    "check-updates:minor": "npx npm-check-updates --target minor",
+    "check-updates:patch": "npx npm-check-updates --target patch"
   },
   "keywords": [
     "rollup-plugin",
@@ -35,13 +41,13 @@
     "node": ">=10.12.0"
   },
   "peerDependencies": {
-    "rollup": "1 || 2"
+    "rollup": "^1"
   },
   "dependencies": {
-    "@rollup/pluginutils": "4"
+    "@rollup/pluginutils": "5"
   },
   "devDependencies": {
-    "@rollup/plugin-buble": "^0.21.3",
-    "rollup": "2"
+    "@rollup/plugin-buble": "^1.0.0",
+    "rollup": "^3"
   }
 }
