@@ -1,9 +1,9 @@
 import { createFilter } from '@rollup/pluginutils'
 
-var arraysEqual = function(a, b) {
+var arraysEqual = function (a, b) {
   if (a.length !== b.length) return false
 
-  for (let i = a.length; i--;) {
+  for (let i = a.length; i--; ) {
     if (a[i] !== b[i]) return false
   }
 
@@ -14,7 +14,7 @@ export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
   let dest = options.output
-  let lastEmit = null;
+  let lastEmit = null
   let hasChanged = false
   let prevIds = []
 
@@ -23,16 +23,21 @@ export default function css(options = {}) {
     if (modules.has(id)) {
       return new Set()
     }
-    
+
     if (filter(id)) modules.add(id)
-    
+
     // Recursively retrieve all of imported CSS modules
     getModuleInfo(id).importedIds.forEach(importId => {
-      modules = new Set([].concat(Array.from(modules), Array.from(getCSSModules(importId, getModuleInfo, modules))))
-    });
-  
+      modules = new Set(
+        [].concat(
+          Array.from(modules),
+          Array.from(getCSSModules(importId, getModuleInfo, modules))
+        )
+      )
+    })
+
     return modules
-  };
+  }
 
   return {
     name: 'css',
@@ -74,8 +79,12 @@ export default function css(options = {}) {
 
       // If the files are imported in the same order and there are no changes
       // or options.output is false, there is no work to be done
-      if (arraysEqual(prevIds, ids) && !hasChanged || options.output === false) {
-        if (options.emitOnEveryBuild === true) this.emitFile(lastEmit) 
+      if (
+        (arraysEqual(prevIds, ids) && !hasChanged) ||
+        options.output === false
+      ) {
+        if (lastEmit && options.emitOnEveryBuild === true)
+          this.emitFile(lastEmit)
         return
       }
       prevIds = ids
