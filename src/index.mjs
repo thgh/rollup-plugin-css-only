@@ -3,7 +3,9 @@ import { createFilter } from '@rollup/pluginutils'
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
-  let dest = options.output
+  let output = options.output
+  let name = options.name
+  let fileName = options.fileName
 
   // Get all CSS modules in the order that they were imported
   const getCSSModules = (id, getModuleInfo, modules = new Set()) => {
@@ -74,28 +76,12 @@ export default function css(options = {}) {
         return
       }
 
-      if (typeof dest !== 'string') {
-        // Don't create unwanted empty stylesheets
-        if (!css.length) {
-          return
-        }
-
-        // Guess destination filename
-        dest =
-          opts.file ||
-          (Array.isArray(opts.output)
-            ? opts.output[0].file
-            : opts.output && opts.output.file) ||
-          opts.dest ||
-          'bundle.js'
-        if (dest.endsWith('.js')) {
-          dest = dest.slice(0, -3)
-        }
-        dest = dest + '.css'
+      if (typeof output == 'string') {
+        fileName = fileName || output
       }
 
       // Emit styles to file
-      this.emitFile({ type: 'asset', fileName: dest, source: css })
+      this.emitFile({ type: 'asset', name, fileName, source: css })
     }
   }
 }

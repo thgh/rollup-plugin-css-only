@@ -17,10 +17,30 @@ declare namespace css {
      */
     exclude?: ReadonlyArray<string | RegExp> | string | RegExp | null
     /**
+     * If a name is supplied, this will be used as substitution for [name]
+     * in the corresponding output.chunkFileNames or output.assetFileNames pattern,
+     * possibly adding a unique number to the end of the file name to avoid conflicts.
+     * If neither a name nor fileName is supplied, a default name will be used.
+     *
+     * @link https://rollupjs.org/guide/en/#thisemitfile
+     */
+    name?: string
+    /**
+     * If a fileName is provided, it will be used unmodified as the name of the generated file,
+     * throwing an error if this causes a conflict.
+     * If neither a name nor fileName is supplied, a default name will be used.
+     *
+     * @link https://rollupjs.org/guide/en/#thisemitfile
+     */
+    fileName?: string
+    /**
      * Callback that will be called ongenerate
+     *
+     * When set to a string, it will be used as `fileName`.
      */
     output?:
       | boolean
+      /** @deprecated Use name or fileName instead */
       | string
       | ((
           styles: string,
