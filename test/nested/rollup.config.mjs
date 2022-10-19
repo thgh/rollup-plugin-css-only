@@ -3,8 +3,8 @@ import css from '../../src/index.mjs'
 export default {
   input: 'input.js',
   output: {
-    file: 'output/bundle.js',
+    file: 'output/output.js',
     format: 'esm'
   },
-  plugins: [css({ output: 'bundle.css' })]
+  plugins: [css({ output: 'output.css' })]
 }

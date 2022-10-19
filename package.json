@@ -14,7 +14,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -cw",
-    "test:nested": "cd test/nested && rm -rf output && rollup -c && cmp output/bundle.js expected/bundle.js && cmp output/bundle.css expected/bundle.css && cd ../..",
+    "test:nested": "cd test/nested && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
     "test:simple": "cd test/simple && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
     "test:win:simple": "cd .\\test\\simple && del -f output.* && rollup -c && cd .. && ECHO n|comp simple\\output.js expected.js && ECHO n|comp simple\\output.css simple\\expected.css && cd ..",
     "test": "npm run test:simple && npm run test:nested",
