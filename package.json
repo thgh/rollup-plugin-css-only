@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-css-only",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Rollup plugin that bundles imported css",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
