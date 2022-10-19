@@ -44,7 +44,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=10.12.0"
+    "node": ">=14"
   },
   "peerDependencies": {
     "rollup": "*"
