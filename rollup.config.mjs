@@ -4,12 +4,12 @@ export default {
   input: 'src/index.js',
   output: [
     {
-      file: 'dist/index.cjs.js',
+      file: 'dist/index.cjs',
       format: 'cjs',
       exports: 'default'
     },
     {
-      file: 'dist/index.es.js',
+      file: 'dist/index.mjs',
       format: 'es'
     }
   ],
