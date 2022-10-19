@@ -26,17 +26,8 @@
 ## Installation
 
 ```
+# v4 is compatible with Rollup 3 & 2
 npm install --save-dev rollup-plugin-css-only
-```
-
-### Older versions
-
-```
-# Default behavior is write to file, order not guaranteed
-npm install --save-dev rollup-plugin-css-only@3
-
-# If using Node.js lower than 10.12
-npm install --save-dev rollup-plugin-css-only@1
 ```
 
 ## Usage
@@ -76,7 +67,7 @@ By default the plugin will use `output.assetFileNames` to decide the filename.
 ```js
 css({
   // Optional: filename to write all styles to
-  output: 'bundle.css',
+  output: 'bundle.css'
 })
 ```
 
