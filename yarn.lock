@@ -168,10 +168,10 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
-rollup@^3:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/rollup/-/rollup-3.1.0.tgz"
-  integrity sha512-GEvr+COcXicr4nuih6mpt2Eydq5lZ72z0RrKx1H4/Q2ouT34OHrIIJ9OUj2sZqUhq7QL8Hp8Q8BoWbjL/6ccRQ==
+rollup@<4:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.2.3.tgz#67d894c981ad50cc811779748e52c05742560c64"
+  integrity sha512-qfadtkY5kl0F5e4dXVdj2D+GtOdifasXHFMiL1SMf9ADQDv5Eti6xReef9FKj+iQPR2pvtqWna57s/PjARY4fg==
   optionalDependencies:
     fsevents "~2.3.2"
 
