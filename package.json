@@ -47,13 +47,13 @@
     "node": ">=14"
   },
   "peerDependencies": {
-    "rollup": "*"
+    "rollup": "<4"
   },
   "dependencies": {
     "@rollup/pluginutils": "5"
   },
   "devDependencies": {
     "@rollup/plugin-buble": "^1.0.0",
-    "rollup": "^3"
+    "rollup": "<4"
   }
 }
