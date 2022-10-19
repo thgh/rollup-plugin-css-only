@@ -14,6 +14,7 @@ export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
   let dest = options.output
+  let lastEmit = null;
   let hasChanged = false
   let prevIds = []
 
@@ -73,7 +74,10 @@ export default function css(options = {}) {
 
       // If the files are imported in the same order and there are no changes
       // or options.output is false, there is no work to be done
-      if (arraysEqual(prevIds, ids) && !hasChanged || options.output === false) return
+      if (arraysEqual(prevIds, ids) && !hasChanged || options.output === false) {
+        if (options.emitOnEveryBuild === true) this.emitFile(lastEmit) 
+        return
+      }
       prevIds = ids
 
       let css = ''
@@ -111,7 +115,8 @@ export default function css(options = {}) {
       }
 
       // Emit styles to file
-      this.emitFile({ type: 'asset', fileName: dest, source: css })
+      lastEmit = { type: 'asset', fileName: dest, source: css }
+      this.emitFile(lastEmit)
     }
   }
 }
