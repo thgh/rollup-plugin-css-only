@@ -1,22 +1,9 @@
 import { createFilter } from '@rollup/pluginutils'
 
-var arraysEqual = function (a, b) {
-  if (a.length !== b.length) return false
-
-  for (let i = a.length; i--; ) {
-    if (a[i] !== b[i]) return false
-  }
-
-  return true
-}
-
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
   let dest = options.output
-  let lastEmit = null
-  let hasChanged = false
-  let prevIds = []
 
   // Get all CSS modules in the order that they were imported
   const getCSSModules = (id, getModuleInfo, modules = new Set()) => {
@@ -41,9 +28,6 @@ export default function css(options = {}) {
 
   return {
     name: 'css',
-    buildStart() {
-      hasChanged = false
-    },
     transform(code, id) {
       if (!filter(id)) {
         return
@@ -62,7 +46,6 @@ export default function css(options = {}) {
       // NOTE: If we are in transform block, we can assume styles[id] !== code, right?
       if (styles[id] !== code && (styles[id] || code)) {
         styles[id] = code
-        hasChanged = true
       }
 
       return ''
@@ -76,18 +59,6 @@ export default function css(options = {}) {
         const modules = getCSSModules(root, this.getModuleInfo)
         ids.push(...Array.from(modules))
       }
-
-      // If the files are imported in the same order and there are no changes
-      // or options.output is false, there is no work to be done
-      if (
-        (arraysEqual(prevIds, ids) && !hasChanged) ||
-        options.output === false
-      ) {
-        if (lastEmit && options.emitOnEveryBuild === true)
-          this.emitFile(lastEmit)
-        return
-      }
-      prevIds = ids
 
       let css = ''
 
@@ -124,8 +95,7 @@ export default function css(options = {}) {
       }
 
       // Emit styles to file
-      lastEmit = { type: 'asset', fileName: dest, source: css }
-      this.emitFile(lastEmit)
+      this.emitFile({ type: 'asset', fileName: dest, source: css })
     }
   }
 }
