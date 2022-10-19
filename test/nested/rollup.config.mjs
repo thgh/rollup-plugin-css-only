@@ -1,4 +1,4 @@
-import css from '../../src/index.js'
+import css from '../../src/index.mjs'
 
 export default {
   input: 'input.js',
@@ -6,7 +6,5 @@ export default {
     file: 'output/bundle.js',
     format: 'esm'
   },
-  plugins: [
-    css({ output: 'bundle.css' })
-  ]
+  plugins: [css({ output: 'bundle.css' })]
 }
