@@ -76,7 +76,7 @@ export default function css(options = {}) {
       }
 
       // Emit styles to file
-      this.emitFile({ type: 'asset', name, fileName, source: css })
+      this.emitFile({ type: 'asset', name, fileName, source: css + '\n' })
     }
   }
 }
