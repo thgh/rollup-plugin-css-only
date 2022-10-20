@@ -62,13 +62,8 @@ export default function css(options = {}) {
         ids.push(...Array.from(modules))
       }
 
-      let css = ''
-
       // Combine all stylesheets, respecting import order
-      for (const index in ids) {
-        let id = ids[index]
-        css += styles[id] + '\n' || ''
-      }
+      const css = ids.map(id => styles[id]).join('\n')
 
       // Emit styles through callback
       if (typeof options.output === 'function') {
