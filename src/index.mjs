@@ -16,7 +16,10 @@ export default function css(options = {}) {
     if (filter(id)) modules.add(id)
 
     // Recursively retrieve all of imported CSS modules
-    getModuleInfo(id).importedIds.forEach(importId => {
+    const info = getModuleInfo(id)
+    if (!info) return modules
+
+    info.importedIds.forEach(importId => {
       modules = new Set(
         [].concat(
           Array.from(modules),
