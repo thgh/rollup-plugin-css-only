@@ -8,19 +8,22 @@ export default function css(options = {}) {
   let fileName = options.fileName
 
   // Get all CSS modules in the order that they were imported
-  const getCSSModules = (id, getModuleInfo, modules = new Set()) => {
-    if (modules.has(id)) {
+  const getCSSModules = (id, getModuleInfo, modules = new Set(), visitedModules = new Set()) => {
+    if (modules.has(id) || visitedModules.has(id)) {
       return new Set()
     }
 
     if (filter(id)) modules.add(id)
+
+    // Prevent infinite recursion with circular dependencies
+    visitedModules.add(id);
 
     // Recursively retrieve all of imported CSS modules
     getModuleInfo(id).importedIds.forEach(importId => {
       modules = new Set(
         [].concat(
           Array.from(modules),
-          Array.from(getCSSModules(importId, getModuleInfo, modules))
+          Array.from(getCSSModules(importId, getModuleInfo, modules, visitedModules))
         )
       )
     })
