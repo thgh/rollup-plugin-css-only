@@ -3,15 +3,39 @@ import { createFilter } from '@rollup/pluginutils'
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
   const styles = {}
-  let dest = options.output
-  let hasChanged = false
-  let prevIds = []
+  let output = options.output
+  let name = options.name
+  let fileName = options.fileName
+
+  // Get all CSS modules in the order that they were imported
+  const getCSSModules = (id, getModuleInfo, modules = new Set(), visitedModules = new Set()) => {
+    if (modules.has(id) || visitedModules.has(id)) {
+      return new Set()
+    }
+
+    if (filter(id)) modules.add(id)
+
+    // Prevent infinite recursion with circular dependencies
+    visitedModules.add(id);
+
+    // Recursively retrieve all of imported CSS modules
+    const info = getModuleInfo(id)
+    if (!info) return modules
+
+    info.importedIds.forEach(importId => {
+      modules = new Set(
+        [].concat(
+          Array.from(modules),
+          Array.from(getCSSModules(importId, getModuleInfo, modules, visitedModules))
+        )
+      )
+    })
+
+    return modules
+  }
 
   return {
     name: 'css',
-    buildStart() {
-      hasChanged = false
-    },
     transform(code, id) {
       if (!filter(id)) {
         return
@@ -39,9 +63,8 @@ export default function css(options = {}) {
       // Keep track of every stylesheet
       // Check if it changed since last render
       // NOTE: If we are in transform block, we can assume styles[id] !== code, right?
-      if (styles[id] !== codeWithoutImports && (styles[id] || codeWithoutImports)) {
-        styles[id] = codeWithoutImports
-        hasChanged = true
+      if (styles[id] !== code && (styles[id] || code)) {
+        styles[id] = code
       }
 
       // return a list of imports
@@ -57,18 +80,8 @@ export default function css(options = {}) {
         ids.push(...modules)
       }
 
-      // If the files are imported in the same order and there are no changes
-      // or options.output is false, there is no work to be done
-      if (arraysEqual(prevIds, ids) && !hasChanged || options.output === false) return
-      prevIds = ids
-
-      let css = ''
-
       // Combine all stylesheets, respecting import order
-      for (const index in ids) {
-        let id = ids[index]
-        css += styles[id] + '\n' || ''
-      }
+      const css = ids.map(id => styles[id]).join('\n')
 
       // Emit styles through callback
       if (typeof options.output === 'function') {
@@ -76,28 +89,12 @@ export default function css(options = {}) {
         return
       }
 
-      if (typeof dest !== 'string') {
-        // Don't create unwanted empty stylesheets
-        if (!css.length) {
-          return
-        }
-
-        // Guess destination filename
-        dest =
-          opts.file ||
-          (Array.isArray(opts.output)
-            ? opts.output[0].file
-            : opts.output && opts.output.file) ||
-          opts.dest ||
-          'bundle.js'
-        if (dest.endsWith('.js')) {
-          dest = dest.slice(0, -3)
-        }
-        dest = dest + '.css'
+      if (typeof output == 'string') {
+        fileName = fileName || output
       }
 
       // Emit styles to file
-      this.emitFile({ type: 'asset', fileName: dest, source: css })
+      this.emitFile({ type: 'asset', name, fileName, source: css + '\n' })
     }
   }
 }
@@ -137,7 +134,7 @@ function getCSSModules(id, filter, getModuleInfo) {
   //  2
   //   21
   //   22
-  // will result in the list: root, 2, 22, 21, 1, 12, 11 
+  // will result in the list: root, 2, 22, 21, 1, 12, 11
   // revered: 11, 12, 1, 21, 22, 2, root
   const visitModule = (id) => {
     if (visited.has(id)) {

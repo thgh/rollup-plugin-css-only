@@ -1,15 +1,15 @@
 import buble from '@rollup/plugin-buble'
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.mjs',
   output: [
     {
-      file: 'dist/index.cjs.js',
+      file: 'dist/index.cjs',
       format: 'cjs',
       exports: 'default'
     },
     {
-      file: 'dist/index.es.js',
+      file: 'dist/index.mjs',
       format: 'es'
     }
   ],
