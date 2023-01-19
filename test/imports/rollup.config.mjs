@@ -1,4 +1,4 @@
-import css from '../../src/index.js'
+import css from '../../src/index.mjs'
 
 export default {
   input: 'input.js',

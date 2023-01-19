@@ -63,8 +63,8 @@ export default function css(options = {}) {
       // Keep track of every stylesheet
       // Check if it changed since last render
       // NOTE: If we are in transform block, we can assume styles[id] !== code, right?
-      if (styles[id] !== code && (styles[id] || code)) {
-        styles[id] = code
+      if (styles[id] !== codeWithoutImports && (styles[id] || codeWithoutImports)) {
+        styles[id] = codeWithoutImports
       }
 
       // return a list of imports
@@ -76,8 +76,8 @@ export default function css(options = {}) {
       // Determine import order of files
       for (const file in bundle) {
         const root = bundle[file].facadeModuleId
-        const modules = getCSSModules(root, filter, this.getModuleInfo)
-        ids.push(...modules)
+        const modules = getCSSModules(root, this.getModuleInfo)
+        ids.push(...Array.from(modules))
       }
 
       // Combine all stylesheets, respecting import order
@@ -99,10 +99,6 @@ export default function css(options = {}) {
   }
 }
 
-function arraysEqual(a, b) {
-  if (a.length !== b.length) return false
-  return a.every((ai, i) => ai === b[i]);
-}
 
 function splitImports(code) {
   const imports = [];
@@ -115,38 +111,3 @@ function splitImports(code) {
     codeWithoutImports
   };
 }
-
-// Get all CSS modules in the order that they were imported
-function getCSSModules(id, filter, getModuleInfo) {
-  const modules = [];
-  const visited = new Set();
-
-  // traversal logic
-  // 1. mark node as visited
-  // 2. add to list at the end
-  // 3. go down with imports but in reverse order
-  // 4. reverse full list
-  // example
-  // root
-  //  1
-  //   11
-  //   12
-  //  2
-  //   21
-  //   22
-  // will result in the list: root, 2, 22, 21, 1, 12, 11
-  // revered: 11, 12, 1, 21, 22, 2, root
-  const visitModule = (id) => {
-    if (visited.has(id)) {
-      return;
-    }
-    visited.add(id);
-    if (filter(id)) {
-      modules.push(id);
-    }
-    const reverseChildren = getModuleInfo(id).importedIds.slice().reverse();
-    reverseChildren.forEach(visitModule);
-  }
-  visitModule(id);
-  return modules.reverse();
-};
