@@ -1,5 +1,8 @@
 {
-  "name": "rollup-plugin-css-only",
+  "name": "@sgratzl/rollup-plugin-css-only",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "4.3.0",
   "description": "Rollup plugin that bundles imported css",
   "main": "dist/index.cjs",
@@ -18,8 +21,9 @@
     "test:nested": "cd test/nested && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
     "test:empty": "cd test/empty && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
     "test:simple": "cd test/simple && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
+    "test:imports": "cd test/imports && rm -rf output && rollup -c && cmp output/output.js expected.js && cmp output/output.css expected.css && cd ../..",
     "test:win:simple": "cd .\\test\\simple && del -f output.* && rollup -c && cd .. && ECHO n|comp simple\\output.js expected.js && ECHO n|comp simple\\output.css simple\\expected.css && cd ..",
-    "test": "npm run test:simple && npm run test:nested && npm run test:empty && npm run test:circular",
+    "test": "npm run test:simple && npm run test:nested && npm run test:empty && npm run test:circular && npm run test:imports",
     "test:win": "npm run test:win:simple",
     "lint": "prettier rollup.config.js src/**",
     "prepare": "npm run build",
@@ -34,13 +38,16 @@
   ],
   "license": "MIT",
   "author": "Thomas Ghysels <info@thomasg.be>",
-  "homepage": "https://github.com/thgh/rollup-plugin-css-only",
+  "contributors": [
+    "Samuel Gratzl <sam@sgratzl.com>"
+  ],
+  "homepage": "https://github.com/sgratzl/rollup-plugin-css-only",
   "bugs": {
-    "url": "https://github.com/thgh/rollup-plugin-css-only/issues"
+    "url": "https://github.com/sgratzl/rollup-plugin-css-only/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thgh/rollup-plugin-css-only"
+    "url": "https://github.com/sgratzl/rollup-plugin-css-only"
   },
   "files": [
     "dist"

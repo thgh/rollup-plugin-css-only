@@ -1,10 +1,12 @@
 import css from '../../src/index.mjs'
 
 export default {
-  input: 'a.js',
+  input: 'input.js',
   output: {
     file: 'output/output.js',
     format: 'esm'
   },
-  plugins: [css({ output: 'output.css' })]
+  plugins: [
+    css({ output: 'output.css' })
+  ]
 }
