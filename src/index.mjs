@@ -8,30 +8,38 @@ export default function css(options = {}) {
   let fileName = options.fileName
 
   // Get all CSS modules in the order that they were imported
-  const getCSSModules = (id, getModuleInfo, modules = new Set(), visitedModules = new Set()) => {
-    if (modules.has(id) || visitedModules.has(id)) {
-      return new Set()
+  const getCSSModules = (id, getModuleInfo) => {
+    const modules = [];
+    const visited = new Set();
+
+    // traversal logic
+    // 1. mark node as visited
+    // 2. add to list at the end
+    // 3. go down with imports but in reverse order
+    // 4. reverse full list
+    // example
+    // root
+    //  1
+    //   11
+    //   12
+    //  2
+    //   21
+    //   22
+    // will result in the list: root, 2, 22, 21, 1, 12, 11
+    // revered: 11, 12, 1, 21, 22, 2, root
+    const visitModule = (id) => {
+      if (visited.has(id)) {
+        return;
+      }
+      visited.add(id);
+      if (filter(id)) {
+        modules.push(id);
+      }
+      const reverseChildren = getModuleInfo(id).importedIds.slice().reverse();
+      reverseChildren.forEach(visitModule);
     }
-
-    if (filter(id)) modules.add(id)
-
-    // Prevent infinite recursion with circular dependencies
-    visitedModules.add(id);
-
-    // Recursively retrieve all of imported CSS modules
-    const info = getModuleInfo(id)
-    if (!info) return modules
-
-    info.importedIds.forEach(importId => {
-      modules = new Set(
-        [].concat(
-          Array.from(modules),
-          Array.from(getCSSModules(importId, getModuleInfo, modules, visitedModules))
-        )
-      )
-    })
-
-    return modules
+    visitModule(id);
+    return modules.reverse();
   }
 
   return {
