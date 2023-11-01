@@ -26,7 +26,8 @@
 ## Installation
 
 ```
-# v4 is compatible with Rollup 3 & 2
+# v4 is compatible with Rollup 4 & 3 & 2
+# Rollup 4 since v4.4
 npm install --save-dev rollup-plugin-css-only
 ```
 
