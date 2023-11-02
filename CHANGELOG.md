@@ -4,6 +4,40 @@ All notable changes to `rollup-plugin-css-only` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.4.0] - 2023-11-01
+
+### Changed
+
+- Support Rollup v4 as peerDependencies
+
+### Changed
+
+- Mark visited modules to avoid infinite recursion
+
+## [4.3.0] - 2022-11-04
+
+### Changed
+
+- Mark visited modules to avoid infinite recursion
+
+## [4.2.0] - 2022-10-25
+
+### Changed
+
+- Fix issue when module info is null
+
+## [4.1.1] - 2022-10-21
+
+### Changed
+
+- Always append newline to asset to make it's generated
+
+## [4.1.0] - 2022-10-20
+
+### Changed
+
+- Simplify name/fileName by making them explicit options
+
 ## [4.0.0] - 2020-12-18
 
 ### Changed
