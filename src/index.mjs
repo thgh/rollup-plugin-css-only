@@ -59,17 +59,17 @@ export default function css(options = {}) {
       return ''
     },
     generateBundle(opts, bundle) {
-      const ids = []
+      const ids = new Set()
 
       // Determine import order of files
       for (const file in bundle) {
         const root = bundle[file].facadeModuleId
         const modules = getCSSModules(root, this.getModuleInfo)
-        ids.push(...Array.from(modules))
+        modules.forEach(id => ids.add(id))
       }
 
       // Combine all stylesheets, respecting import order
-      const css = ids.map(id => styles[id]).join('\n')
+      const css = Array.from(ids).map(id => styles[id]).join('\n')
 
       // Emit styles through callback
       if (typeof options.output === 'function') {
