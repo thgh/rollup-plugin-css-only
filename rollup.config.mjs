@@ -1,5 +1,3 @@
-import buble from '@rollup/plugin-buble'
-
 export default {
   input: 'src/index.mjs',
   output: [
@@ -14,5 +12,4 @@ export default {
     }
   ],
   external: ['@rollup/pluginutils', 'fs-extra/lib/output'],
-  plugins: [buble()]
 }
