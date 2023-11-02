@@ -55,7 +55,6 @@
     "@rollup/pluginutils": "5"
   },
   "devDependencies": {
-    "@rollup/plugin-buble": "^1.0.0",
     "rollup": "<5"
   }
 }
