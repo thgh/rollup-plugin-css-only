@@ -1,4 +1,4 @@
-import css from 'rollup-plugin-css-only'
+import css from '../../src/index.mjs'
 
 export default {
   input: 'a.js',
