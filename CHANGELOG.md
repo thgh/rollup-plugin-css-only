@@ -4,6 +4,12 @@ All notable changes to `rollup-plugin-css-only` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.5.2] - 2023-11-07
+
+### Changed
+
+- Fix duplicate styles in output https://github.com/thgh/rollup-plugin-css-only/pull/58 https://github.com/thgh/rollup-plugin-css-only/issues/55 https://github.com/thgh/rollup-plugin-css-only/issues/49
+
 ## [4.4.0] - 2023-11-01
 
 ### Changed
