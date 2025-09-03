@@ -1,4 +1,5 @@
 import { createFilter } from '@rollup/pluginutils'
+import { parse } from 'node:path'
 
 export default function css(options = {}) {
   const filter = createFilter(options.include || ['**/*.css'], options.exclude)
