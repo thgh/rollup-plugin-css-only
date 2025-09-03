@@ -66,6 +66,14 @@ export default function css(options = {}) {
         const root = bundle[file].facadeModuleId
         const modules = getCSSModules(root, this.getModuleInfo)
         modules.forEach(id => ids.add(id))
+
+        // Resolve name if it's empty, see https://github.com/thgh/rollup-plugin-css-only/issues/61
+        // Solution by @the0neWhoKnocks
+        // https://github.com/the0neWhoKnocks/rollup-plugin-css-only/commit/cff92ae84792c6ef116276f31cca91407a6b1e28#diff-0b5856b7606f07e47d576a66791b7666ff3239ee4e354656cabefb7d5fecec88R68-R76
+        if (!name && modules?.size) {
+          const parsed = parse(bundle[file].name)
+          name = `${parsed.name}.css`
+        }
       }
 
       // Combine all stylesheets, respecting import order

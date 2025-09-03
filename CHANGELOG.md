@@ -4,6 +4,12 @@ All notable changes to `rollup-plugin-css-only` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.5.3] - 2025-09-03
+
+### Changed
+
+- Fix output css file missing file extension https://github.com/thgh/rollup-plugin-css-only/issues/59 https://github.com/thgh/rollup-plugin-css-only/issues/61
+
 ## [4.5.2] - 2023-11-07
 
 ### Changed
