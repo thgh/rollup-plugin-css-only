@@ -62,13 +62,32 @@ import './layout.css'
 
 ### Options
 
-There is 1 option: `output`.  
 By default the plugin will use `output.assetFileNames` to decide the filename.
 
 ```js
 css({
-  // Optional: filename to write all styles to
-  output: 'bundle.css'
+  exclude,  // [optional] - Array of glob/Strings like what `include` uses.
+  fileName, // [optional] - File name of emitted asset.
+  include,  // [optional] - Array of glob/Strings - default: ['**/*.css'].
+  name,     // [optional] - Name of the emitted asset.
+  output,   // [optional] - Below are the possible values for `output`:
+  
+  // ---------------------------------------------------------------------------
+  // Filename to write all styles to
+  output: 'bundle.css',
+  
+  // Callback that will be called on generate with two arguments:
+  // - styles: the contents of all style tags combined: 'body { color: green }'
+  // - styleNodes: an array of style objects: [{ lang: 'css', content: 'body { color: green }' }]
+  output: (styles, styleNodes) => {
+    writeFileSync('bundle.css', styles)
+  },
+
+  // Disable any style output or callbacks
+  output: false,
+
+  // Default behaviour is to write all styles to the bundle destination where .js is replaced by .css
+  output: null
 })
 ```
 
