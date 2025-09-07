@@ -21,7 +21,7 @@
     "test:token-names": "cd test/token-names && rm -rf output && rollup -c && cmp output/app_sQGiL2.js expected.js && cmp output/app_QeMiKt.css expected.css && cd ../..",
     "test:unique": "cd test/unique && rm -rf output && rollup -c && cmp output/dependency-a.js expected-dep.js && cmp output/main.js expected.js && cmp output/output.css expected.css && cd ../..",
     "test:win:simple": "cd .\\test\\simple && del -f output.* && rollup -c && cd .. && ECHO n|comp simple\\output.js expected.js && ECHO n|comp simple\\output.css simple\\expected.css && cd ..",
-    "test": "npm run test:simple && npm run test:nested && npm run test:empty && npm run test:circular && npm run test:unique",
+    "test": "./bin/test-runner.cjs --exclude ':win'",
     "lint": "prettier rollup.config.js src/**",
     "prepare": "npm run build",
     "prepublish": "npm run build",
