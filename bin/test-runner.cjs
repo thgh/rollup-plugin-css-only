@@ -38,8 +38,8 @@ const tests = Object
 
 const printMsg = (msg, overwrite = false) => {
   if (overwrite) {
-    process.stdout.clearLine(0);
-    process.stdout.cursorTo(0);
+    process.stdout.clearLine?.(0);
+    process.stdout.cursorTo?.(0);
   }
   process.stdout.write(msg);
 };
